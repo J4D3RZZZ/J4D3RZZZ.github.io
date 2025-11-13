@@ -76,7 +76,7 @@ export default function TeacherRooms({ user }) {
       endTime.setHours(parseInt(endHour, 10), parseInt(endMin, 10), 0, 0);
 
       await axios.post(
-        "http://localhost:5000/api/bookings/book",
+        "https://j4d3rzzz-github-io-1.onrender.com/api/bookings/book",
         {
           roomId: formData.roomId,
           startTime,
