@@ -25,7 +25,7 @@ export default function Register() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        "https://j4d3rzzz-github-io-1.onrender.com/api/auth/register",
         formData
       );
 
