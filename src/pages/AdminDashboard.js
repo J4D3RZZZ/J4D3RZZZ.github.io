@@ -47,7 +47,7 @@ export default function AdminDashboard({ user }) {
 
   const handleApprove = async (userId) => {
     try {
-      const res = await axios.put(`http://localhost:5000/api/admin/approve/${userId}`);
+      const res = await axios.put(`http://https://j4d3rzzz-github-io-1.onrender.com/api/admin/approve/${userId}`);
       alert(res.data.message);
       fetchUsers();
     } catch (err) {
@@ -60,7 +60,7 @@ export default function AdminDashboard({ user }) {
     if (!currentRejectUser || !rejectReason) return;
     try {
       const res = await axios.put(
-        `http://localhost:5000/api/admin/reject/${currentRejectUser._id}`,
+        `https://j4d3rzzz-github-io-1.onrender.com/api/admin/reject/${currentRejectUser._id}`,
         { reason: rejectReason }
       );
       alert(res.data.message);
