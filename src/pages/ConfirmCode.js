@@ -23,7 +23,7 @@ export default function ConfirmCode() {
       });
 
       const response = await axios.post(
-        "http://localhost:5000/api/auth/verify",
+        "https://j4d3rzzz-github-io-1.onrender.com/api/auth/verify",
         { userId, code: numericCode }
       );
 
