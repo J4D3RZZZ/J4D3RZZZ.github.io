@@ -12,7 +12,7 @@ export default function Login({ setUser }) {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/login", {
+      const response = await axios.post("https://j4d3rzzz-github-io-1.onrender.com/api/auth/login", {
         loginField,
         password,
       });
