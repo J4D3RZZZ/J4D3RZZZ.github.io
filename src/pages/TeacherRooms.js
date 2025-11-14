@@ -21,12 +21,12 @@ export default function TeacherRooms({ user }) {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      // Filter out expired bookings
+      // Filter to only currently occupied bookings (during occupation time)
       const now = new Date();
       const deptRooms = res.data
         .map(room => {
           const activeBookings = (room.bookings ?? []).filter(
-            b => new Date(b.endTime) > now
+            b => new Date(b.startTime) <= now && new Date(b.endTime) > now
           );
           return { ...room, bookings: activeBookings };
         })
