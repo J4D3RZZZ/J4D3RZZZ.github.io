@@ -47,7 +47,7 @@ export default function AdminDashboard({ user }) {
 
   const handleApprove = async (userId) => {
     try {
-      const res = await axios.put(`http://https://j4d3rzzz-github-io-1.onrender.com/api/admin/approve/${userId}`);
+      const res = await axios.put(`https://j4d3rzzz-github-io-1.onrender.com/api/admin/approve/${userId}`);
       alert(res.data.message);
       fetchUsers();
     } catch (err) {
