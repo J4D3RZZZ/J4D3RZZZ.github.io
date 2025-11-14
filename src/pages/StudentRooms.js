@@ -19,7 +19,7 @@ export default function StudentRooms({ user }) {
       const deptRooms = res.data
         .map(room => {
           const activeBookings = (room.bookings ?? []).filter(
-            b => new Date(b.endTime) > now
+            b => new Date(b.startTime) <= now && new Date(b.endTime) > now
           );
           return { ...room, bookings: activeBookings };
         })
