@@ -17,21 +17,24 @@ export default function TeacherRooms({ user }) {
     if (!token) return console.error("No token found in localStorage");
 
     try {
-      const res = await axios.get("https://j4d3rzzz-github-io-1.onrender.com/api/rooms", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(
+        "https://j4d3rzzz-github-io-1.onrender.com/api/rooms",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       // Filter to only currently occupied bookings (during occupation time)
       const now = new Date();
       const deptRooms = res.data
-        .map(room => {
+        .map((room) => {
           const activeBookings = (room.bookings ?? []).filter(
-            b => new Date(b.startTime) <= now && new Date(b.endTime) > now
+            (b) => new Date(b.startTime) <= now && new Date(b.endTime) > now
           );
           return { ...room, bookings: activeBookings };
         })
         .filter(
-          room =>
+          (room) =>
             room.department?.trim().toLowerCase() ===
             user.department?.trim().toLowerCase()
         );
@@ -55,11 +58,11 @@ export default function TeacherRooms({ user }) {
     return () => clearInterval(interval); // cleanup on unmount
   }, [user.department]);
 
-  const handleChange = e =>
+  const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  // Booking function
-  const handleBook = async e => {
+  // Booking function with validation
+  const handleBook = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
     if (!token) return console.error("No token found in localStorage");
@@ -75,6 +78,26 @@ export default function TeacherRooms({ user }) {
       const endTime = new Date(today);
       endTime.setHours(parseInt(endHour, 10), parseInt(endMin, 10), 0, 0);
 
+      // Check 1: start < end
+      if (startTime >= endTime) {
+        return alert("Start time must be before end time!");
+      }
+
+      // Check 2: overlapping with existing bookings in the room
+      const room = rooms.find((r) => r._id === formData.roomId);
+      if (!room) return alert("Selected room not found!");
+
+      const overlap = (room.bookings ?? []).some((b) => {
+        const bStart = new Date(b.startTime);
+        const bEnd = new Date(b.endTime);
+        return startTime < bEnd && endTime > bStart; // overlap condition
+      });
+
+      if (overlap) {
+        return alert("This time overlaps with an existing booking!");
+      }
+
+      // Send POST request
       await axios.post(
         "https://j4d3rzzz-github-io-1.onrender.com/api/bookings/book",
         {
@@ -114,9 +137,10 @@ export default function TeacherRooms({ user }) {
           required
         >
           <option value="">Select Room</option>
-          {rooms.map(room => (
+          {rooms.map((room) => (
             <option key={room._id} value={room._id}>
-              {room.name} ({room.bookings?.length === 0 ? "Available" : "Booked"})
+              {room.name}{" "}
+              {room.bookings?.length === 0 ? "(Available)" : "(Booked)"}
             </option>
           ))}
         </select>
@@ -150,7 +174,7 @@ export default function TeacherRooms({ user }) {
       {rooms.length === 0 ? (
         <p>No rooms available for your department.</p>
       ) : (
-        rooms.map(room => (
+        rooms.map((room) => (
           <div
             key={room._id}
             style={{
