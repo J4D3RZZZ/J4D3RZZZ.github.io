@@ -8,6 +8,12 @@ body {
   flex-direction: column;
 }
 
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 /* Header */
 header {
   display: flex;
