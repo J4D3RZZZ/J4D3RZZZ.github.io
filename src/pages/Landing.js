@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "./Landing.css";
+import "./style/Landing.css";
 
 export default function Landing() {
   const [time, setTime] = useState("");
