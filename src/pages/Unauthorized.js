@@ -9,14 +9,14 @@ export default function Unauthorized() {
 
         <div className="title">
           <h1>CVMS</h1>
-          <p>Access Denied</p>
+          <p>Description</p>
         </div>
       </header>
 
       <div className="container">
         <div className="box_login">
           <h2>Unauthorized Access</h2>
-          <p>You need to login with the proper role to access this page.</p>
+          <p>You need to login / register with the proper role to access this page.</p>
         </div>
       </div>
 
