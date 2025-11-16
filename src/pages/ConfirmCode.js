@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import "../styles/ConfirmCode.css";
 
 export default function ConfirmCode() {
   const { userId } = useParams(); // get userId from URL
@@ -14,13 +15,9 @@ export default function ConfirmCode() {
     setLoading(true);
 
     try {
-      // Trim and ensure numeric code
       const numericCode = code.toString().trim();
 
-      console.log("[FRONTEND] Sending verification request:", {
-        userId,
-        code: numericCode,
-      });
+      console.log("[FRONTEND] Sending verification request:", { userId, code: numericCode });
 
       const response = await axios.post(
         "https://j4d3rzzz-github-io-1.onrender.com/api/auth/verify",
@@ -33,10 +30,7 @@ export default function ConfirmCode() {
       // Redirect to login after successful verification
       navigate("/login");
     } catch (err) {
-      console.error(
-        "[FRONTEND] Verification error:",
-        err.response?.data || err.message
-      );
+      console.error("[FRONTEND] Verification error:", err.response?.data || err.message);
       alert(err.response?.data?.message || "Verification failed.");
     } finally {
       setLoading(false);
@@ -44,23 +38,48 @@ export default function ConfirmCode() {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: "50px auto", textAlign: "center" }}>
-      <h2>Enter Confirmation Code</h2>
-      <form
-        onSubmit={handleSubmit}
-        style={{ display: "flex", flexDirection: "column", gap: "12px" }}
-      >
-        <input
-          type="text"
-          placeholder="Confirmation Code"
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-          required
-        />
-        <button type="submit" disabled={loading}>
-          {loading ? "Verifying..." : "Verify"}
-        </button>
-      </form>
+    <div className="page">
+      {/* Optional Header */}
+      <header>
+        <div className="logo"></div>
+        <div className="title">
+          <h1>CVMS</h1>
+          <p>Confirm Account</p>
+        </div>
+      </header>
+
+      {/* Main container */}
+      <div className="container">
+        <div className="box_login">
+          <h2>Enter Confirmation Code</h2>
+          <p>Please check your email and enter the code below to verify your account.</p>
+
+          <form
+            onSubmit={handleSubmit}
+            style={{ display: "flex", flexDirection: "column", gap: "12px", marginTop: "20px" }}
+          >
+            <input
+              type="text"
+              placeholder="Confirmation Code"
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              required
+              style={{
+                padding: "12px",
+                fontSize: "16px",
+                borderRadius: "8px",
+                border: "1px solid #ccc",
+                outline: "none",
+              }}
+            />
+            <button type="submit" disabled={loading}>
+              {loading ? "Verifying..." : "Verify"}
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <footer>© 2025 CVMS — All Rights Reserved</footer>
     </div>
   );
 }
