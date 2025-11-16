@@ -1,109 +1,49 @@
-/* Full width header/footer */
-header, footer {
+/* MAIN CONTAINER */
+.student-rooms-container {
   width: 100%;
-  margin: 0;
-  padding: 15px 20px;
-  background: #1a1a1a;
-  color: white;
-  box-sizing: border-box;
-}
-
-/* Page container */
-.container {
-  width: 100%;
-  max-width: 900px;
-  margin: 20px auto;
+  max-width: 1100px;
+  margin: 40px auto;
   padding: 0 20px;
-  box-sizing: border-box;
   text-align: left;
 }
 
-/* Title */
-h2 {
-  text-align: left;
-  margin-bottom: 20px;
+/* TITLE */
+.rooms-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: white;
 }
 
-/* Room list in vertical layout */
-.room-list {
+/* VERTICAL LIST */
+.rooms-list {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 22px;
 }
 
-/* Long box */
-.room {
+/* ROOM BOX */
+.room-card {
   background: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-
-  /* Make it long and full width */
+  padding: 22px;
+  border-radius: 14px;
   width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 20px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Image small on left */
-.room img {
-  width: 150px;
-  height: 110px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-/* Text info */
-.room-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Room text style */
-.room-name {
-  font-size: 1.3rem;
+/* Room name */
+.room-card strong {
+  font-size: 22px;
   font-weight: bold;
 }
 
-.room-description {
-  font-size: .95rem;
-  margin-top: 5px;
+/* List of bookings */
+.room-card ul {
+  margin-top: 12px;
+  padding-left: 20px;
 }
 
-/* Status badge */
-.status {
-  margin-top: 10px;
-  display: inline-block;
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-weight: bold;
-}
-
-.available {
-  background: #4caf50;
-  color: white;
-}
-
-.booked {
-  background: #f44336;
-  color: white;
-}
-
-/* Mobile responsiveness */
-@media (max-width: 600px) {
-  .room {
-    flex-direction: column;
-    text-align: left;
-  }
-
-  .room img {
-    width: 100%;
-    height: 160px;
-  }
-
-  .room-info {
-    width: 100%;
-  }
+.room-card li {
+  padding: 4px 0;
+  font-size: 16px;
 }
