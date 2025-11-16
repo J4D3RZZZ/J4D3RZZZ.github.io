@@ -24,12 +24,14 @@ export default function TeacherRooms({ user }) {
         }
       );
 
-      // Filter to only currently occupied bookings (during occupation time)
       const now = new Date();
+
+      // Filter rooms for user's department
       const deptRooms = res.data
         .map((room) => {
+          // Include bookings that are ongoing or in the future
           const activeBookings = (room.bookings ?? []).filter(
-            (b) => new Date(b.startTime) <= now && new Date(b.endTime) > now
+            (b) => new Date(b.endTime) > now
           );
           return { ...room, bookings: activeBookings };
         })
@@ -189,21 +191,27 @@ export default function TeacherRooms({ user }) {
               {(room.bookings ?? []).length === 0 ? (
                 <li>Available</li>
               ) : (
-                room.bookings.map((b, i) => (
-                  <li key={i}>
-                    Occupied by Prof. {b.teacher} |{" "}
-                    {new Date(b.startTime).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}{" "}
-                    -{" "}
-                    {new Date(b.endTime).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}{" "}
-                    | {b.section}
-                  </li>
-                ))
+                room.bookings.map((b, i) => {
+                  const now = new Date();
+                  const start = new Date(b.startTime);
+                  const end = new Date(b.endTime);
+                  const status = now < start ? "Reserved" : "Occupied";
+                  return (
+                    <li key={i}>
+                      {status} by Prof. {b.teacher} |{" "}
+                      {start.toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}{" "}
+                      -{" "}
+                      {end.toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}{" "}
+                      | {b.section}
+                    </li>
+                  );
+                })
               )}
             </ul>
           </div>
