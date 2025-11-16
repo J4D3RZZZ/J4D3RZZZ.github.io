@@ -1,14 +1,8 @@
-body {
+.page {
   margin: 0;
   font-family: "Segoe UI", Arial, sans-serif;
   background: linear-gradient(180deg, #1E3A8A 0%, #14295F 100%);
   color: #fff;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.page {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
