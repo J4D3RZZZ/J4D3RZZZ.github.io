@@ -34,11 +34,11 @@ export default function Landing() {
           <h1>Welcome to CVMS</h1>
           <p>Please register or login to continue.</p>
 
-          <a href="/register">
+          <a href="/#/register">
             <button>Register</button>
           </a>
 
-          <a href="/login">
+          <a href="/#/login">
             <button style={{ marginLeft: 10 }}>Login</button>
           </a>
         </div>
