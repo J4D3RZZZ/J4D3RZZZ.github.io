@@ -90,7 +90,7 @@ header .time {
 }
 
 /* Buttons */
-button {
+.page .container .box_login button {
   padding: 12px 26px;
   border: none;
   background: #1E3A8A;
