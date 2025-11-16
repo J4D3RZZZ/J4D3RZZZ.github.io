@@ -1,0 +1,87 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #1E3A8A 0%, #14295F 100%);
+  color: #fff;
+}
+
+/* Header */
+header {
+  display: flex;
+  align-items: center;
+  padding: 20px 30px;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+header .logo {
+  width: 65px;
+  height: 65px;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+
+header .title {
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
+}
+
+header .title h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+header .title p {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+/* Main Container */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  padding: 40px 20px;
+}
+
+/* Login / Message Card */
+.box_login {
+  background: #fff;
+  color: #1E3A8A;
+  padding: 50px 40px;
+  border-radius: 16px;
+  text-align: center;
+  font-weight: bold;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.box_login h2 {
+  margin: 0;
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.box_login p {
+  margin-top: 0;
+  font-size: 15px;
+  opacity: 0.8;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 18px;
+  background: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  font-size: 14px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
