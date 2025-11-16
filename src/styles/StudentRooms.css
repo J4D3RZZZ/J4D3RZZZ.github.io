@@ -1,106 +1,80 @@
-/* Full page layout */
-.page {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  font-family: "Segoe UI", Arial, sans-serif;
-  background: linear-gradient(180deg, #1E3A8A 0%, #14295F 100%);
+/* Make header and footer full width */
+header, footer {
+  width: 100%;
+  margin: 0;
+  padding: 15px 20px;
+  background: #1a1a1a;
+  color: white;
+  box-sizing: border-box;
+}
+
+/* Page container */
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 20px auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+  text-align: left; /* align all text left */
+}
+
+/* Title of the section */
+h2 {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+/* Room list container in GRID */
+.room-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+/* Room card */
+.room {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  text-align: left;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.room img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.room-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.room-description {
+  margin: 8px 0 12px;
+  font-size: .95rem;
+}
+
+.booked, .available {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.booked {
+  background: #f44336;
   color: white;
 }
 
-/* Header - full width */
-header {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  padding: 20px 40px;
-  background: rgba(0, 0, 0, 0.25);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-  box-sizing: border-box;
-}
-
-header .logo {
-  width: 65px;
-  height: 65px;
-  background: white;
-  border-radius: 50%;
-  box-shadow: 0 0 10px rgba(255,255,255,0.6);
-}
-
-header .title {
-  margin-left: 15px;
-  flex-grow: 1;
-}
-
-header .title h1 {
-  margin: 0;
-  font-size: 28px;
-  font-weight: 700;
-}
-
-header .title p {
-  margin: 0;
-  font-size: 15px;
-  opacity: 0.85;
-}
-
-header .time {
-  font-size: 16px;
-  opacity: 0.8;
-}
-
-/* Main container */
-.container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 40px auto 20px;
-  padding: 0 40px;
-  box-sizing: border-box;
-}
-
-/* Left-aligned title */
-.container h2 {
-  margin: 0 0 20px 0;
-  text-align: left;
-  font-size: 30px;
-  font-weight: 700;
-}
-
-/* Room card styles */
-.room {
-  width: 100%;                       /* FULL WIDTH */
-  background: #fff;
-  color: #1E3A8A;
-  padding: 30px 35px;
-  border-radius: 16px;
-  margin-bottom: 20px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.20);
-  text-align: left;                  /* Align all text left */
-}
-
-.room strong {
-  font-size: 22px;
-  display: block;
-  margin-bottom: 12px;
-}
-
-.room ul {
-  padding-left: 20px;
-  margin: 0;
-}
-
-.room li {
-  font-size: 16px;
-  margin-bottom: 8px;
-}
-
-/* Footer - full width */
-footer {
-  width: 100%;
-  margin-top: auto;
-  padding: 18px 40px;
-  background: rgba(0, 0, 0, 0.3);
-  border-top: 1px solid rgba(255,255,255,0.15);
-  font-size: 14px;
-  box-sizing: border-box;
+.available {
+  background: #4caf50;
+  color: white;
 }
