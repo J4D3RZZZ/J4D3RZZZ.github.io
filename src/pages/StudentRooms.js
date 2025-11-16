@@ -7,7 +7,6 @@ export default function StudentRooms({ user }) {
   const [loading, setLoading] = useState(true);
   const [time, setTime] = useState(new Date().toLocaleTimeString());
 
-  // Fetch rooms function
   const fetchRooms = useCallback(async () => {
     const token = localStorage.getItem("token");
     if (!token) return console.error("No token found in localStorage");
@@ -15,19 +14,15 @@ export default function StudentRooms({ user }) {
     try {
       const res = await axios.get(
         "https://j4d3rzzz-github-io-1.onrender.com/api/rooms",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
       const now = new Date();
-
       const deptRooms = res.data
         .map((room) => {
           const upcomingBookings = (room.bookings ?? [])
             .filter((b) => new Date(b.endTime) > now)
             .sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
-
           return { ...room, bookings: upcomingBookings };
         })
         .filter(
@@ -58,8 +53,7 @@ export default function StudentRooms({ user }) {
     };
   }, [fetchRooms]);
 
-  if (loading)
-    return <div className="loading">Loading rooms...</div>;
+  if (loading) return <div className="loading">Loading rooms...</div>;
 
   return (
     <div className="page">
@@ -88,10 +82,15 @@ export default function StudentRooms({ user }) {
                   room.bookings.map((b, i) => (
                     <li key={i}>
                       Occupied by Prof. {b.teacherName || b.teacher} |{" "}
-                      {new Date(b.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}{" "}
+                      {new Date(b.startTime).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}{" "}
                       -{" "}
-                      {new Date(b.endTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })} |{" "}
-                      {b.section}
+                      {new Date(b.endTime).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })} | {b.section}
                     </li>
                   ))
                 )}
