@@ -24,11 +24,12 @@ export default function StudentRooms({ user, time }) {
 
       const deptRooms = res.data
         .map((room) => {
-          const upcomingBookings = (room.bookings ?? [])
+          // Include bookings that are ongoing or in the future
+          const activeBookings = (room.bookings ?? [])
             .filter((b) => new Date(b.endTime) > now)
             .sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
 
-          return { ...room, bookings: upcomingBookings };
+          return { ...room, bookings: activeBookings };
         })
         .filter(
           (room) =>
@@ -69,22 +70,23 @@ export default function StudentRooms({ user, time }) {
                 {room.bookings.length === 0 ? (
                   <li>Available</li>
                 ) : (
-                  room.bookings.map((b, i) => (
-                    <li key={i}>
-                      Occupied by Prof. {b.teacherName || b.teacher} —{" "}
-                      {new Date(b.startTime).toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                      {" - "}
-                      {new Date(b.endTime).toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                      {" | "}
-                      {b.section}
-                    </li>
-                  ))
+                  room.bookings.map((b, i) => {
+                    const now = new Date();
+                    const start = new Date(b.startTime);
+                    const end = new Date(b.endTime);
+                    const status = now < start ? "Reserved" : "Occupied";
+
+                    return (
+                      <li key={i} className={status.toLowerCase()}>
+                        {status} by Prof. {b.teacherName || b.teacher} —{" "}
+                        {start.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                        {" - "}
+                        {end.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                        {" | "}
+                        {b.section}
+                      </li>
+                    );
+                  })
                 )}
               </ul>
             </div>
