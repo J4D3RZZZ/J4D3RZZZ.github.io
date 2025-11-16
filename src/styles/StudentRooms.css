@@ -6,7 +6,7 @@
   font-family: "Segoe UI", Arial, sans-serif;
   background: linear-gradient(180deg, #1E3A8A 0%, #14295F 100%);
   color: #fff;
-  padding: 0 20px;
+  padding: 0 40px;
 }
 
 /* Header */
@@ -14,12 +14,12 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 0;
+  padding: 25px 0;
 }
 
 header .logo {
-  width: 65px;
-  height: 65px;
+  width: 70px;
+  height: 70px;
   background-color: #fff;
   border-radius: 50%;
   box-shadow: 0 0 10px rgba(255,255,255,0.5);
@@ -28,61 +28,61 @@ header .logo {
 header .title {
   display: flex;
   flex-direction: column;
-  margin-left: 15px;
+  margin-left: 20px;
   flex-grow: 1;
 }
 
 header .title h1 {
   margin: 0;
-  font-size: 28px;
-  font-weight: 600;
+  font-size: 32px;
+  font-weight: 700;
 }
 
 header .title p {
   margin: 0;
-  font-size: 14px;
+  font-size: 16px;
   opacity: 0.85;
 }
 
 header .time {
-  font-size: 14px;
+  font-size: 16px;
   opacity: 0.85;
   text-align: right;
-  min-width: 60px;
+  min-width: 70px;
 }
 
 /* Container */
 .container {
-  max-width: 900px;
-  margin: 30px auto;
+  max-width: 1200px;
+  margin: 40px auto;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 25px;
 }
 
 /* Title */
 .container h2 {
   text-align: left;
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 15px;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
 }
 
 /* Room Cards */
 .room {
   background: #fff;
   color: #1E3A8A;
-  border-radius: 16px;
-  padding: 20px 25px;
-  margin-bottom: 10px;
+  border-radius: 20px;
+  padding: 30px 35px;
+  margin-bottom: 15px;
   width: 100%;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
 .room strong {
-  font-size: 18px;
+  font-size: 20px;
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .room ul {
@@ -91,20 +91,21 @@ header .time {
 }
 
 .room li {
-  font-size: 14px;
-  margin-bottom: 5px;
+  font-size: 16px;
+  margin-bottom: 8px;
 }
 
 /* Loading */
 .loading {
   text-align: center;
-  margin-top: 50px;
+  margin-top: 80px;
+  font-size: 18px;
 }
 
 /* Footer */
 footer {
   text-align: center;
-  padding: 18px;
+  padding: 20px;
   background: rgba(0,0,0,0.3);
   color: #fff;
   font-size: 14px;
