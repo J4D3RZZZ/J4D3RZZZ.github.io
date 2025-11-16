@@ -42,7 +42,6 @@ export default function StudentRooms({ user }) {
   useEffect(() => {
     fetchRooms();
     const intervalRooms = setInterval(fetchRooms, 10000);
-
     const intervalTime = setInterval(() => {
       setTime(new Date().toLocaleTimeString());
     }, 1000);
@@ -61,7 +60,7 @@ export default function StudentRooms({ user }) {
         <div className="logo"></div>
         <div className="title">
           <h1>CVMS</h1>
-          <p>{user.department} Department</p>
+          <p>Description</p>
         </div>
         <div className="time">{time}</div>
       </header>
