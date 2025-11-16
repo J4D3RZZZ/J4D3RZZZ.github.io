@@ -1,86 +1,85 @@
-/* Page container */
+/* Full page layout */
 .page {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
   font-family: "Segoe UI", Arial, sans-serif;
   background: linear-gradient(180deg, #1E3A8A 0%, #14295F 100%);
-  color: #fff;
-  padding: 0 40px;
+  color: white;
 }
 
-/* Header */
+/* Header - full width */
 header {
+  width: 100%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 25px 0;
+  padding: 20px 40px;
+  background: rgba(0, 0, 0, 0.25);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  box-sizing: border-box;
 }
 
 header .logo {
-  width: 70px;
-  height: 70px;
-  background-color: #fff;
+  width: 65px;
+  height: 65px;
+  background: white;
   border-radius: 50%;
-  box-shadow: 0 0 10px rgba(255,255,255,0.5);
+  box-shadow: 0 0 10px rgba(255,255,255,0.6);
 }
 
 header .title {
-  display: flex;
-  flex-direction: column;
-  margin-left: 20px;
+  margin-left: 15px;
   flex-grow: 1;
 }
 
 header .title h1 {
   margin: 0;
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
 }
 
 header .title p {
   margin: 0;
-  font-size: 16px;
+  font-size: 15px;
   opacity: 0.85;
 }
 
 header .time {
   font-size: 16px;
-  opacity: 0.85;
-  text-align: right;
-  min-width: 70px;
+  opacity: 0.8;
 }
 
-/* Container */
+/* Main container */
 .container {
+  width: 100%;
   max-width: 1200px;
-  margin: 40px auto;
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
+  margin: 40px auto 20px;
+  padding: 0 40px;
+  box-sizing: border-box;
 }
 
-/* Title */
+/* Left-aligned title */
 .container h2 {
+  margin: 0 0 20px 0;
   text-align: left;
-  font-size: 28px;
+  font-size: 30px;
   font-weight: 700;
-  margin-bottom: 20px;
 }
 
-/* Room Cards */
+/* Room card styles */
 .room {
+  width: 100%;                       /* FULL WIDTH */
   background: #fff;
   color: #1E3A8A;
-  border-radius: 20px;
   padding: 30px 35px;
-  margin-bottom: 15px;
-  width: 100%;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  border-radius: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.20);
+  text-align: left;                  /* Align all text left */
 }
 
 .room strong {
-  font-size: 20px;
+  font-size: 22px;
   display: block;
   margin-bottom: 12px;
 }
@@ -95,19 +94,13 @@ header .time {
   margin-bottom: 8px;
 }
 
-/* Loading */
-.loading {
-  text-align: center;
-  margin-top: 80px;
-  font-size: 18px;
-}
-
-/* Footer */
+/* Footer - full width */
 footer {
-  text-align: center;
-  padding: 20px;
-  background: rgba(0,0,0,0.3);
-  color: #fff;
-  font-size: 14px;
+  width: 100%;
   margin-top: auto;
+  padding: 18px 40px;
+  background: rgba(0, 0, 0, 0.3);
+  border-top: 1px solid rgba(255,255,255,0.15);
+  font-size: 14px;
+  box-sizing: border-box;
 }
