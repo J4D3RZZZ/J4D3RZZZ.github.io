@@ -1,9 +1,15 @@
-/* MAIN CONTAINER */
+/* PAGE BACKGROUND & STRUCTURE */
+.page {
+  min-height: 100vh;
+  padding-top: 120px;
+  padding-bottom: 60px;
+}
+
+/* MAIN WRAPPER */
 .student-rooms-container {
   width: 100%;
-  max-width: 1100px;
-  margin: 40px auto;
-  padding: 0 20px;
+  max-width: 1000px;
+  margin: auto;
   text-align: left;
 }
 
@@ -15,40 +21,38 @@
   color: white;
 }
 
-/* VERTICAL LIST */
+/* COLUMN LIST */
 .rooms-list {
   display: flex;
   flex-direction: column;
   gap: 22px;
 }
 
-/* ROOM BOX */
-.room-card {
-  background: white;
+/* ROOM CARD */
+.room-box {
+  background: #ffffff;
   padding: 22px;
   border-radius: 14px;
   width: 100%;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  border-left: 5px solid #1e3a8a;
 }
 
 /* Room name */
-.room-card .room-name {
+.room-name {
   font-size: 22px;
   font-weight: bold;
+  color: #1e3a8a;
 }
 
-/* List of bookings */
-.room-card ul {
+/* Bookings list */
+.room-bookings {
   margin-top: 12px;
   padding-left: 20px;
 }
 
-.room-card li {
+.room-bookings li {
   padding: 4px 0;
   font-size: 16px;
-}
-
-/* FIX HEADER/FOOTER stretching */
-.page {
-  width: 100% !important;
+  color: #333;
 }
