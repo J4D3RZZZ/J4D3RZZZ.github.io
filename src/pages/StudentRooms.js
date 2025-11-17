@@ -20,6 +20,7 @@ export default function StudentRooms({ user }) {
 
       const deptRooms = res.data
         .map((room) => {
+          // Only keep upcoming bookings
           const upcomingBookings = (room.bookings ?? [])
             .filter((b) => new Date(b.endTime) > now)
             .sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
@@ -51,16 +52,14 @@ export default function StudentRooms({ user }) {
   return (
     <div className="page">
       <div className="student-rooms-container">
-        <h2 className="rooms-title">
-          Room Availability ({user.department})
-        </h2>
+        <h2 className="rooms-title">Room Availability ({user.department})</h2>
 
         {rooms.length === 0 ? (
           <p>No rooms available for your department.</p>
         ) : (
           <div className="rooms-list">
             {rooms.map((room) => (
-              <div className="room-card" key={room._id}>
+              <div className="room-box" key={room._id}>
                 <strong className="room-name">{room.name}</strong>
 
                 <ul className="room-bookings">
