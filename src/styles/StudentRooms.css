@@ -1,130 +1,112 @@
-/* ------------------------------
-   General Page Styles
------------------------------- */
-body, html {
-  margin: 0;
-  padding: 0;
-  font-family: "Segoe UI", Arial, sans-serif;
-  background: linear-gradient(180deg, #1E3A8A 0%, #14295F 100%);
-  color: #fff;
+/* PAGE BACKGROUND & STRUCTURE */
+.page {
   min-height: 100vh;
+  padding-top: 120px;
+  padding-bottom: 60px;
 }
 
-/* ------------------------------
-   Header
------------------------------- */
+/* HEADER & FOOTER STYLES ARE IN LANDING.CSS */
 header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 70px;
-  background-color: #1B2B6F;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  padding: 0 20px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-  z-index: 1000;
+  padding: 20px 30px;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-.header-left {
-  font-size: 20px;
-  font-weight: bold;
+header .logo {
+  width: 65px;
+  height: 65px;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255,255,255,0.5);
 }
 
-.header-right {
+header .title {
   display: flex;
-  align-items: center;
-  gap: 15px; /* spacing between time and logout */
+  flex-direction: column;
+  margin-left: 15px;
+  flex-grow: 1;
 }
 
-.time {
-  flex-shrink: 0; /* prevents time from being squeezed */
-  font-size: 16px;
+header .title h1 {
+  margin: 0;
+  margin-left: 10px;
+  font-size: 28px;
+  font-weight: 600;
 }
 
-.logout-btn {
-  padding: 6px 12px;
-  background-color: #ff4d4f;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  color: #fff;
-  font-weight: bold;
+header .title p {
+  margin: 0;
+  margin-left: 10px;
+  font-size: 14px;
+  opacity: 0.85;
 }
 
-/* ------------------------------
-   Footer
------------------------------- */
+header .time {
+  font-size: 14px;
+  opacity: 0.85;
+}
+
 footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
+  text-align: left;
+  padding: 18px;
+  background: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  font-size: 14px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+/* MAIN WRAPPER */
+.student-rooms-container {
   width: 100%;
-  height: 50px;
-  background-color: #1B2B6F;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 -2px 5px rgba(0,0,0,0.3);
-  z-index: 1000;
+  max-width: 1000px;
+  margin: auto;
+  text-align: left;
 }
 
-/* ------------------------------
-   Main Content
------------------------------- */
-.main-content {
-  padding-top: 80px;   /* header height + 10px */
-  padding-bottom: 60px; /* footer height + 10px */
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
+/* TITLE */
+.rooms-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: white;
 }
 
-/* ------------------------------
-   Room Box
------------------------------- */
+/* COLUMN LIST */
+.rooms-list {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* ROOM CARD */
 .room-box {
-  background-color: rgba(255, 255, 255, 0.1);
-  padding: 20px;
-  border-radius: 10px;
-  width: 300px; /* PC default */
-  max-width: 90%; /* responsive on mobile */
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-  transition: transform 0.2s;
+  background: #ffffff;
+  padding: 22px;
+  border-radius: 14px;
+  width: 100%;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  border-left: 5px solid #1e3a8a;
 }
 
-.room-box:hover {
-  transform: scale(1.05);
+/* Room name */
+.room-name {
+  font-size: 22px;
+  font-weight: bold;
+  color: #1e3a8a;
 }
 
-/* ------------------------------
-   Responsive Adjustments
------------------------------- */
-@media (max-width: 600px) {
-  header {
-    flex-direction: column;
-    height: auto;
-    padding: 10px;
-  }
+/* Bookings list */
+.room-bookings {
+  margin-top: 12px;
+  padding-left: 20px;
+}
 
-  .header-right {
-    margin-top: 5px;
-  }
-
-  .room-box {
-    width: 90%;
-    padding: 15px;
-  }
-
-  .time {
-    font-size: 14px;
-  }
-
-  .logout-btn {
-    padding: 5px 10px;
-    font-size: 14px;
-  }
+.room-bookings li {
+  padding: 4px 0;
+  font-size: 16px;
+  color: #333;
 }
