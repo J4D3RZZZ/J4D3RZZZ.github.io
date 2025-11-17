@@ -32,7 +32,7 @@
 }
 
 /* Room name */
-.room-card strong {
+.room-card .room-name {
   font-size: 22px;
   font-weight: bold;
 }
@@ -46,4 +46,9 @@
 .room-card li {
   padding: 4px 0;
   font-size: 16px;
+}
+
+/* FIX HEADER/FOOTER stretching */
+.page {
+  width: 100% !important;
 }
