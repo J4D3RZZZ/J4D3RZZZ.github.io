@@ -1,10 +1,21 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
-import "../styles/StudentRooms.css";
+import "../styles/StudentRooms.css"; 
 
 export default function StudentRooms({ user }) {
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [time, setTime] = useState("");
+
+  // Time updater
+  useEffect(() => {
+    const update = () => {
+      setTime(new Date().toLocaleTimeString());
+    };
+    update();
+    const interval = setInterval(update, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   const fetchRooms = useCallback(async () => {
     const token = localStorage.getItem("token");
@@ -20,7 +31,6 @@ export default function StudentRooms({ user }) {
 
       const deptRooms = res.data
         .map((room) => {
-          // Only keep upcoming bookings
           const upcomingBookings = (room.bookings ?? [])
             .filter((b) => new Date(b.endTime) > now)
             .sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
@@ -51,7 +61,21 @@ export default function StudentRooms({ user }) {
 
   return (
     <div className="page">
-      <div className="student-rooms-container">
+
+      {/* HEADER — SAME AS LANDING */}
+      <header>
+        <div className="logo"></div>
+
+        <div className="title">
+          <h1>CVMS</h1>
+          <p>Room Monitoring</p>
+        </div>
+
+        <div className="time">{time}</div>
+      </header>
+
+      {/* CONTENT */}
+      <div className="rooms-wrapper">
         <h2 className="rooms-title">Room Availability ({user.department})</h2>
 
         {rooms.length === 0 ? (
@@ -88,6 +112,8 @@ export default function StudentRooms({ user }) {
           </div>
         )}
       </div>
+
+      <footer>© 2025 CVMS — All Rights Reserved</footer>
     </div>
   );
 }
