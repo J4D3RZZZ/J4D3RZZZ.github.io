@@ -3,6 +3,8 @@
   min-height: 100vh;
   padding-top: 120px;
   padding-bottom: 60px;
+  display: flex;
+  flex-direction: column;
 }
 
 /* HEADER & FOOTER STYLES ARE IN LANDING.CSS */
