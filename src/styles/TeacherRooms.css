@@ -1,0 +1,137 @@
+/* PAGE BACKGROUND & STRUCTURE */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #1E3A8A 0%, #14295F 100%);
+  color: #fff;
+}
+
+/* Prevent shrinking */
+header,
+footer {
+  flex-shrink: 0;
+}
+
+/* HEADER */
+header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px 30px;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+header .logo {
+  width: 65px;
+  height: 65px;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+
+header .title {
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
+  flex-grow: 1;
+}
+
+header .title h1 {
+  margin: 0;
+  margin-left: 10px;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+header .title p {
+  margin: 0;
+  margin-left: 10px;
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+header .time {
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+/* FOOTER */
+footer {
+  text-align: left;
+  padding: 18px;
+  background: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  font-size: 14px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+/* MAIN CONTENT WRAPPER */
+.rooms-wrapper {
+  flex: 1;
+  width: 100%;
+  max-width: 1000px;
+  margin: 120px auto 60px;
+  padding: 0 20px;
+  text-align: left;
+}
+
+.rooms-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: white;
+}
+
+/* LIST */
+.rooms-list {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* ROOM CARD */
+.room-box {
+  background: #ffffff;
+  padding: 22px;
+  border-radius: 14px;
+  width: 100%;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  border-left: 5px solid #1e3a8a;
+}
+
+.room-name {
+  font-size: 22px;
+  font-weight: bold;
+  color: #1e3a8a;
+}
+
+/* INFO LIST */
+.room-info {
+  margin-top: 12px;
+  padding-left: 20px;
+}
+
+.room-info li {
+  padding: 6px 0;
+  font-size: 16px;
+  color: #333;
+}
+
+/* STATUS COLORS */
+.available {
+  color: #0a7a29;
+  font-weight: 600;
+}
+
+.occupied {
+  color: #b80000;
+  font-weight: 600;
+}
+
+.next {
+  color: #1e3a8a;
+  font-weight: 600;
+}
