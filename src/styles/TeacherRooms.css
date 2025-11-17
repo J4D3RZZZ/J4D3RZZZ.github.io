@@ -85,6 +85,44 @@ footer {
   color: white;
 }
 
+/* BOOKING FORM */
+.booking-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 25px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  border-radius: 12px;
+}
+
+.booking-form select,
+.booking-form input,
+.booking-form button {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+}
+
+.booking-form select,
+.booking-form input[type="time"],
+.booking-form input[type="text"] {
+  flex: 1 1 120px;
+}
+
+.booking-form button {
+  background-color: #1e3a8a;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.booking-form button:hover {
+  background-color: #14295f;
+}
+
 /* LIST */
 .rooms-list {
   display: flex;
@@ -134,4 +172,35 @@ footer {
 .next {
   color: #1e3a8a;
   font-weight: 600;
+}
+
+/* MOBILE RESPONSIVENESS */
+@media (max-width: 768px) {
+  .rooms-wrapper {
+    margin: 80px 10px 40px;
+  }
+
+  .rooms-title {
+    font-size: 24px;
+  }
+
+  .booking-form {
+    flex-direction: column;
+  }
+
+  .booking-form select,
+  .booking-form input,
+  .booking-form button {
+    width: 100%;
+  }
+
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  header .title {
+    margin-left: 0;
+  }
 }
