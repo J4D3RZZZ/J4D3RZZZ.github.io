@@ -1,39 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
+import "../styles/TeacherRooms.css";
 
 export default function TeacherRooms({ user }) {
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [formData, setFormData] = useState({
-    roomId: "",
-    startTime: "",
-    endTime: "",
-    section: "",
-  });
+  const [time, setTime] = useState("");
 
-  // Function to fetch rooms from backend
-  const fetchRooms = async () => {
+  // Live clock
+  useEffect(() => {
+    const update = () => setTime(new Date().toLocaleTimeString());
+    update();
+    const interval = setInterval(update, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Fetch rooms
+  const fetchRooms = useCallback(async () => {
     const token = localStorage.getItem("token");
-    if (!token) return console.error("No token found in localStorage");
+    if (!token) return console.error("No token found");
 
     try {
       const res = await axios.get(
         "https://j4d3rzzz-github-io-1.onrender.com/api/rooms",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
       const now = new Date();
 
-      // Filter rooms for user's department
       const deptRooms = res.data
         .map((room) => {
-          // Include bookings that are ongoing or in the future
-          const activeBookings = (room.bookings ?? []).filter(
-            (b) => new Date(b.endTime) > now
-          );
-          return { ...room, bookings: activeBookings };
+          const sortedBookings = (room.bookings ?? [])
+            .filter((b) => new Date(b.endTime) > now)
+            .sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
+
+          return { ...room, bookings: sortedBookings };
         })
         .filter(
           (room) =>
@@ -47,176 +48,104 @@ export default function TeacherRooms({ user }) {
     } finally {
       setLoading(false);
     }
-  };
-
-  // Initial fetch + auto-refresh every 10 seconds
-  useEffect(() => {
-    fetchRooms(); // initial fetch
-
-    const interval = setInterval(() => {
-      fetchRooms();
-    }, 10000); // refresh every 10 seconds
-
-    return () => clearInterval(interval); // cleanup on unmount
   }, [user.department]);
 
-  const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  useEffect(() => {
+    fetchRooms();
+    const interval = setInterval(fetchRooms, 10000);
+    return () => clearInterval(interval);
+  }, [fetchRooms]);
 
-  // Booking function with validation
-  const handleBook = async (e) => {
-    e.preventDefault();
-    const token = localStorage.getItem("token");
-    if (!token) return console.error("No token found in localStorage");
-
-    try {
-      const today = new Date();
-      const [startHour, startMin] = formData.startTime.split(":");
-      const [endHour, endMin] = formData.endTime.split(":");
-
-      const startTime = new Date(today);
-      startTime.setHours(parseInt(startHour, 10), parseInt(startMin, 10), 0, 0);
-
-      const endTime = new Date(today);
-      endTime.setHours(parseInt(endHour, 10), parseInt(endMin, 10), 0, 0);
-
-      // Check 1: start < end
-      if (startTime >= endTime) {
-        return alert("Start time must be before end time!");
-      }
-
-      // Check 2: overlapping with existing bookings in the room
-      const room = rooms.find((r) => r._id === formData.roomId);
-      if (!room) return alert("Selected room not found!");
-
-      const overlap = (room.bookings ?? []).some((b) => {
-        const bStart = new Date(b.startTime);
-        const bEnd = new Date(b.endTime);
-        return startTime < bEnd && endTime > bStart; // overlap condition
-      });
-
-      if (overlap) {
-        return alert("This time overlaps with an existing booking!");
-      }
-
-      // Send POST request
-      await axios.post(
-        "https://j4d3rzzz-github-io-1.onrender.com/api/bookings/book",
-        {
-          roomId: formData.roomId,
-          startTime,
-          endTime,
-          section: formData.section,
-          teacherName: user.username,
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-
-      alert("Room booked successfully!");
-      setFormData({ roomId: "", startTime: "", endTime: "", section: "" });
-      fetchRooms(); // refresh immediately after booking
-    } catch (err) {
-      console.error("Booking failed:", err);
-      alert(err.response?.data?.message || "Booking failed!");
-    }
-  };
-
-  if (loading) return <div>Loading rooms...</div>;
+  if (loading) return <div className="page">Loading rooms...</div>;
 
   return (
-    <div style={{ maxWidth: 800, margin: "50px auto" }}>
-      <h2>Teacher Dashboard ({user.department})</h2>
+    <div className="page">
+      {/* HEADER */}
+      <header>
+        <div className="logo"></div>
 
-      {/* Booking form */}
-      <form
-        onSubmit={handleBook}
-        style={{ display: "flex", gap: "10px", marginBottom: "20px" }}
-      >
-        <select
-          name="roomId"
-          value={formData.roomId}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Select Room</option>
-          {rooms.map((room) => (
-            <option key={room._id} value={room._id}>
-              {room.name}{" "}
-              {room.bookings?.length === 0 ? "(Available)" : "(Booked)"}
-            </option>
-          ))}
-        </select>
+        <div className="title">
+          <h1>CVMS</h1>
+          <p>Teacher Dashboard</p>
+        </div>
 
-        <input
-          type="text"
-          name="section"
-          placeholder="Section"
-          value={formData.section}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="time"
-          name="startTime"
-          value={formData.startTime}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="time"
-          name="endTime"
-          value={formData.endTime}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">Book Room</button>
-      </form>
+        <div className="time">{time}</div>
+      </header>
 
-      {/* Rooms list */}
-      {rooms.length === 0 ? (
-        <p>No rooms available for your department.</p>
-      ) : (
-        rooms.map((room) => (
-          <div
-            key={room._id}
-            style={{
-              border: "1px solid #ccc",
-              padding: 10,
-              marginBottom: 10,
-              borderRadius: 6,
-            }}
-          >
-            <strong>{room.name}</strong>
-            <ul>
-              {(room.bookings ?? []).length === 0 ? (
-                <li>Available</li>
-              ) : (
-                room.bookings.map((b, i) => {
-                  const now = new Date();
-                  const start = new Date(b.startTime);
-                  const end = new Date(b.endTime);
-                  const status = now < start ? "Reserved" : "Occupied";
-                  return (
-                    <li key={i}>
-                      {status} by Prof. {b.teacher} |{" "}
-                      {start.toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}{" "}
-                      -{" "}
-                      {end.toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}{" "}
-                      | {b.section}
-                    </li>
-                  );
-                })
-              )}
-            </ul>
+      {/* MAIN CONTENT */}
+      <div className="rooms-wrapper">
+        <h2 className="rooms-title">Room Monitoring ({user.department})</h2>
+
+        {rooms.length === 0 ? (
+          <p>No rooms found for your department.</p>
+        ) : (
+          <div className="rooms-list">
+            {rooms.map((room) => {
+              const now = new Date();
+              const bookings = room.bookings;
+
+              const current = bookings.find(
+                (b) =>
+                  new Date(b.startTime) <= now && new Date(b.endTime) >= now
+              );
+
+              const next = bookings.find(
+                (b) => new Date(b.startTime) > now
+              );
+
+              return (
+                <div className="room-box" key={room._id}>
+                  <strong className="room-name">{room.name}</strong>
+
+                  <ul className="room-info">
+                    {/* CURRENTLY OCCUPIED */}
+                    {current ? (
+                      <li className="occupied">
+                        <strong>Occupied Now:</strong> Prof. {current.teacher} —{" "}
+                        {new Date(current.startTime).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}{" "}
+                        to{" "}
+                        {new Date(current.endTime).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}{" "}
+                        — {current.section}
+                      </li>
+                    ) : (
+                      <li className="available">Available Now</li>
+                    )}
+
+                    {/* NEXT SCHEDULE */}
+                    {next && (
+                      <li className="next">
+                        <strong>Next Schedule:</strong> Prof. {next.teacher} —{" "}
+                        {new Date(next.startTime).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}{" "}
+                        to{" "}
+                        {new Date(next.endTime).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}{" "}
+                        — {next.section}
+                      </li>
+                    )}
+
+                    {!current && !next && (
+                      <li>No upcoming schedules</li>
+                    )}
+                  </ul>
+                </div>
+              );
+            })}
           </div>
-        ))
-      )}
+        )}
+      </div>
+
+      <footer>© 2025 CVMS — All Rights Reserved</footer>
     </div>
   );
 }
