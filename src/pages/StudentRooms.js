@@ -1,13 +1,11 @@
-// src/pages/StudentRooms.js
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import "../styles/StudentRooms.css";
 
-export default function StudentRooms({ user, time }) {
+export default function StudentRooms({ user }) {
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch rooms function
   const fetchRooms = useCallback(async () => {
     const token = localStorage.getItem("token");
     if (!token) return console.error("No token found in localStorage");
@@ -15,21 +13,18 @@ export default function StudentRooms({ user, time }) {
     try {
       const res = await axios.get(
         "https://j4d3rzzz-github-io-1.onrender.com/api/rooms",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
       const now = new Date();
 
       const deptRooms = res.data
         .map((room) => {
-          // Include bookings that are ongoing or in the future
-          const activeBookings = (room.bookings ?? [])
+          const upcomingBookings = (room.bookings ?? [])
             .filter((b) => new Date(b.endTime) > now)
             .sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
 
-          return { ...room, bookings: activeBookings };
+          return { ...room, bookings: upcomingBookings };
         })
         .filter(
           (room) =>
@@ -45,52 +40,53 @@ export default function StudentRooms({ user, time }) {
     }
   }, [user.department]);
 
-  // Initial fetch + auto-refresh
   useEffect(() => {
     fetchRooms();
     const interval = setInterval(fetchRooms, 10000);
     return () => clearInterval(interval);
   }, [fetchRooms]);
 
-  if (loading) return <div className="student-rooms-container">Loading rooms...</div>;
+  if (loading) return <div className="page">Loading rooms...</div>;
 
   return (
-    <div className="student-rooms-container">
-      <h2 className="rooms-title">Room Availability ({user.department})</h2>
+    <div className="page">
+      <div className="student-rooms-container">
+        <h2 className="rooms-title">
+          Room Availability ({user.department})
+        </h2>
 
-      <div className="rooms-list">
         {rooms.length === 0 ? (
           <p>No rooms available for your department.</p>
         ) : (
-          rooms.map((room) => (
-            <div key={room._id} className="room-card">
-              <strong>{room.name}</strong>
+          <div className="rooms-list">
+            {rooms.map((room) => (
+              <div className="room-card" key={room._id}>
+                <strong className="room-name">{room.name}</strong>
 
-              <ul>
-                {room.bookings.length === 0 ? (
-                  <li>Available</li>
-                ) : (
-                  room.bookings.map((b, i) => {
-                    const now = new Date();
-                    const start = new Date(b.startTime);
-                    const end = new Date(b.endTime);
-                    const status = now < start ? "Reserved" : "Occupied";
-
-                    return (
-                      <li key={i} className={status.toLowerCase()}>
-                        {status} by Prof. {b.teacherName || b.teacher} —{" "}
-                        {start.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                        {" - "}
-                        {end.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                        {" | "}
-                        {b.section}
+                <ul className="room-bookings">
+                  {(room.bookings ?? []).length === 0 ? (
+                    <li>Available</li>
+                  ) : (
+                    room.bookings.map((b, i) => (
+                      <li key={i}>
+                        Occupied by Prof. {b.teacherName || b.teacher} —{" "}
+                        {new Date(b.startTime).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}{" "}
+                        to{" "}
+                        {new Date(b.endTime).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}{" "}
+                        — {b.section}
                       </li>
-                    );
-                  })
-                )}
-              </ul>
-            </div>
-          ))
+                    ))
+                  )}
+                </ul>
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </div>
