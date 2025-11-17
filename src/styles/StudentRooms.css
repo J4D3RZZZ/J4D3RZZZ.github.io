@@ -1,13 +1,19 @@
 /* PAGE BACKGROUND & STRUCTURE */
 .page {
   min-height: 100vh;
-  padding-top: 120px;
-  padding-bottom: 60px;
   display: flex;
   flex-direction: column;
+  background: linear-gradient(180deg, #1E3A8A 0%, #14295F 100%);
+  color: #fff;
 }
 
-/* HEADER & FOOTER STYLES ARE IN LANDING.CSS */
+/* Make sure header/footer always stay in place */
+header,
+footer {
+  flex-shrink: 0;
+}
+
+/* HEADER */
 header {
   display: flex;
   justify-content: flex-start;
@@ -52,6 +58,7 @@ header .time {
   opacity: 0.85;
 }
 
+/* FOOTER */
 footer {
   text-align: left;
   padding: 18px;
@@ -61,11 +68,13 @@ footer {
   border-top: 1px solid rgba(255,255,255,0.1);
 }
 
-/* MAIN WRAPPER */
-.student-rooms-container {
+/* MAIN CONTENT WRAPPER */
+.rooms-wrapper {
+  flex: 1;                 /* fills remaining space between header & footer */
   width: 100%;
   max-width: 1000px;
-  margin: auto;
+  margin: 120px auto 60px; /* spacing from top and bottom WITHOUT breaking header/footer */
+  padding: 0 20px;
   text-align: left;
 }
 
