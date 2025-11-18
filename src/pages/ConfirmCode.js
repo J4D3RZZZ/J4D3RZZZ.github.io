@@ -1,19 +1,29 @@
-import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/ConfirmCode.css";
 
 export default function ConfirmCode() {
-  const { userId } = useParams(); // get userId from URL
   const navigate = useNavigate();
+  const location = useLocation();
 
+  // Get userId from location state (set after register) or query param fallback
+  const userIdFromState = location.state?.userId || null;
+
+  const [userId, setUserId] = useState(userIdFromState);
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // If userId is missing, redirect to register
+  useEffect(() => {
+    if (!userId) navigate("/register");
+  }, [userId, navigate]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    if (!userId) return;
 
+    setLoading(true);
     try {
       const numericCode = code.toString().trim();
 
@@ -37,18 +47,31 @@ export default function ConfirmCode() {
     }
   };
 
+  // Optional: Resend code logic (if userId exists)
+  const handleResendCode = async () => {
+    if (!userId) return;
+    try {
+      const response = await axios.post(
+        "https://j4d3rzzz-github-io-1.onrender.com/api/auth/resend-code",
+        { userId }
+      );
+      alert(response.data.message);
+    } catch (err) {
+      console.error("[FRONTEND] Resend code error:", err.response?.data || err.message);
+      alert(err.response?.data?.message || "Failed to resend code.");
+    }
+  };
+
   return (
     <div className="page">
-      {/* Optional Header */}
       <header>
         <div className="logo"></div>
         <div className="title">
           <h1>CVMS</h1>
-          <p>Confirm Account</p>
+          <p>Description</p>
         </div>
       </header>
 
-      {/* Main container */}
       <div className="container">
         <div className="box_login">
           <h2>Enter Confirmation Code</h2>
@@ -76,6 +99,14 @@ export default function ConfirmCode() {
               {loading ? "Verifying..." : "Verify"}
             </button>
           </form>
+
+          {/* Optional: Resend code */}
+          <button
+            onClick={handleResendCode}
+            style={{ marginTop: "15px", padding: "10px", fontSize: "14px" }}
+          >
+            Resend Code
+          </button>
         </div>
       </div>
 
