@@ -31,12 +31,21 @@ export default function Register() {
       );
 
       alert(response.data.message);
-      setLoading(false);
 
-      navigate(`/confirm/${response.data.userId}`);
+      // Normal flow → new user just registered
+      navigate(`/confirm/${response.data.userId}`, { state: { userId: response.data.userId } });
     } catch (err) {
-      console.error("Registration error:", err.response?.data || err.message);
-      alert(err.response?.data?.message || "Registration failed.");
+      const data = err.response?.data;
+
+      if (data?.userId && data?.message?.includes("not verified")) {
+        // Email exists but not verified → redirect to confirm page automatically
+        alert(data.message);
+        navigate(`/confirm/${data.userId}`, { state: { userId: data.userId } });
+      } else {
+        // Any other error
+        alert(data?.message || "Registration failed.");
+      }
+    } finally {
       setLoading(false);
     }
   };
