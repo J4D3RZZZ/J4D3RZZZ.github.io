@@ -1,20 +1,21 @@
 import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/ConfirmCode.css";
 
 export default function ConfirmCode() {
+  const { userId: paramUserId } = useParams(); // get userId from URL
+  const location = useLocation(); // for navigation state
   const navigate = useNavigate();
-  const location = useLocation();
 
-  // Get userId from location state (set after register) or query param fallback
-  const userIdFromState = location.state?.userId || null;
+  // Get userId from navigation state OR URL param
+  const stateUserId = location.state?.userId || null;
+  const userId = stateUserId || paramUserId;
 
-  const [userId, setUserId] = useState(userIdFromState);
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // If userId is missing, redirect to register
+  // Redirect to register if userId is missing
   useEffect(() => {
     if (!userId) navigate("/register");
   }, [userId, navigate]);
@@ -44,21 +45,6 @@ export default function ConfirmCode() {
       alert(err.response?.data?.message || "Verification failed.");
     } finally {
       setLoading(false);
-    }
-  };
-
-  // Optional: Resend code logic (if userId exists)
-  const handleResendCode = async () => {
-    if (!userId) return;
-    try {
-      const response = await axios.post(
-        "https://j4d3rzzz-github-io-1.onrender.com/api/auth/resend-code",
-        { userId }
-      );
-      alert(response.data.message);
-    } catch (err) {
-      console.error("[FRONTEND] Resend code error:", err.response?.data || err.message);
-      alert(err.response?.data?.message || "Failed to resend code.");
     }
   };
 
@@ -99,14 +85,6 @@ export default function ConfirmCode() {
               {loading ? "Verifying..." : "Verify"}
             </button>
           </form>
-
-          {/* Optional: Resend code */}
-          <button
-            onClick={handleResendCode}
-            style={{ marginTop: "15px", padding: "10px", fontSize: "14px" }}
-          >
-            Resend Code
-          </button>
         </div>
       </div>
 
